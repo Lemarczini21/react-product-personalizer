@@ -1,23 +1,27 @@
 import styles from './Product.module.scss';
 import { PropTypes } from 'prop-types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import ProductImage from '../ProductImage/ProductImage.js';
 import ProductForm from '../ProductForm/ProductForm.js';
 
 const Product = (props) => {
-  const getPrice = () => {
-    return props.basePrice + currentPrice;
-  };
-
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
   const [currentPrice, setCurrentPrice] = useState(
     props.sizes[0].additionalPrice
   );
 
+  const getPrice = (a, b) => {
+    return a + b;
+  };
+  const totalPrice = useMemo(
+    () => getPrice(props.basePrice, currentPrice),
+    [props.basePrice, currentPrice]
+  );
+
   const cartSummary = {
     name: props.title,
-    price: getPrice(),
+    price: totalPrice,
     size: currentSize,
     color: currentColor,
   };
@@ -32,7 +36,7 @@ const Product = (props) => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {getPrice()} $</span>
+          <span className={styles.price}>Price: {totalPrice} $</span>
         </header>
         <ProductForm
           sizes={props.sizes}
