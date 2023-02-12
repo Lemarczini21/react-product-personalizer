@@ -37,7 +37,6 @@ const Product = (props) => {
         </header>
         <ProductForm
           sizes={props.sizes}
-          //size={props.size}
           setCurrentSize={setCurrentSize}
           setCurrentPrice={setCurrentPrice}
           currentSize={currentSize}
@@ -51,7 +50,6 @@ const Product = (props) => {
   );
 };
 Product.propTypes = {
-  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   basePrice: PropTypes.number.isRequired,
